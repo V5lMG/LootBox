@@ -1,0 +1,9 @@
+name: LootBox
+version: '${project.version}'
+main: fr.lootbox.LootBox
+api-version: 1.19
+authors: [ValMG]
+description: A lootbox plugins 
+commands:
+  box:
+    description: Commande déstiné aux modérateurs pour give la lootbox et la poser

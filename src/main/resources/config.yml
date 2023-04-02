@@ -1,0 +1,141 @@
+items:
+  # Tous les noms d'items doivent être en majuscule et sans espace '_'
+  # maximum 27 slot
+  # name: str
+  # quantity: int
+  # percent: float
+
+  1:
+    name: DIAMOND
+    quantity: 10
+    percent: 10.0
+  
+  2:
+    name: DIRT
+    quantity: 64
+    percent: 40.0
+
+  3:
+    name: IRON_INGOT
+    quantity: 30
+    percent: 50.0
+
+  4:
+    name: GOLD_INGOT
+    quantity: 50
+    percent: 30.0
+
+  5:
+    name: WOODEN_SWORD
+    quantity: 1
+    percent: 5.0
+
+  6:
+    name: STONE_PICKAXE
+    quantity: 2
+    percent: 30.0
+
+  7:
+    name: COAL_BLOCK
+    quantity: 50
+    percent: 42.0
+
+  8:
+    name: GOLD_BLOCK
+    quantity: 10
+    percent: 30.0
+
+  9:
+    name:
+    quantity:
+    percent:
+
+  10:
+    name:
+    quantity:
+    percent:
+
+  11:
+    name:
+    quantity:
+    percent:
+
+  12:
+    name:
+    quantity:
+    percent:
+
+  13:
+    name:
+    quantity:
+    percent:
+
+  14:
+    name:
+    quantity:
+    percent:
+
+  15:
+    name:
+    quantity:
+    percent:
+
+  16:
+    name:
+    quantity:
+    percent:
+
+  17:
+    name:
+    quantity:
+    percent:
+
+  18:
+    name:
+    quantity:
+    percent:
+
+  19:
+    name:
+    quantity:
+    percent:
+
+  20:
+    name:
+    quantity:
+    percent:
+
+  21:
+    name:
+    quantity:
+    percent:
+
+  22:
+    name:
+    quantity:
+    percent:
+
+  23:
+    name:
+    quantity:
+    percent:
+
+  24:
+    name:
+    quantity:
+    percent:
+
+  25:
+    name:
+    quantity:
+    percent:
+
+  26:
+    name:
+    quantity:
+    percent:
+
+  27:
+    name:
+    quantity:
+    percent:
