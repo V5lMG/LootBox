@@ -38,10 +38,7 @@ public class LootBoxListener implements Listener {
 
         if (clickedBlock == null) return;
 
-        if (clickedBlock.getType() == Material.CHEST && clickedBlock.getState() instanceof Chest) {
-
-            Chest chest = (Chest) clickedBlock.getState();
-
+        if (clickedBlock.getType() == Material.CHEST && clickedBlock.getState() instanceof Chest chest) {
 
             if (chest.getCustomName() != null && chest.getCustomName().equals(ChatColor.BLUE + "Lootbox")) {
                 if (action == Action.LEFT_CLICK_BLOCK) {
@@ -53,14 +50,14 @@ public class LootBoxListener implements Listener {
 
                 if (action == Action.RIGHT_CLICK_BLOCK) {
                     player.closeInventory();
-                    AfficherApercu(player);
+                    displayPreview(player);
                 }
             }
 
         }
     }
 
-    private void AfficherApercu(Player player) {
+    private void displayPreview(Player player) {
         // Récupération du bloc de la lootbox
         Block clickedBlock = player.getTargetBlockExact(5);
 
@@ -131,9 +128,6 @@ public class LootBoxListener implements Listener {
         // Copie des éléments de l'inventaire créé précédemment dans l'inventaire du coffre
         chestInventory.setContents(inventory.getContents());
 
-        // Utilisation de la classe pour rendre les items intouchables
-        ChestMetadataManager.makeInventoryUnmodifiable(inventory);
-
         // Ouverture de l'inventaire pour le joueur
         player.openInventory(chestInventory);
 
@@ -141,12 +135,12 @@ public class LootBoxListener implements Listener {
 
     // Action à effectuer sur un clique gauche
     private void AfficherInterface(Player player) {
-        recupItemsConfig();
+        getItemConfig();
         createInterfaceAnimation(player);
-        donnerRecompence(player);
+        giveReward(player);
     }
 
-    public void recupItemsConfig() {
+    public void getItemConfig() {
         // Charge la config
         itemsConfig = ConfigManager.getItemsConfig();
     }
@@ -234,7 +228,7 @@ public class LootBoxListener implements Listener {
         }, 10L);
     }
 
-    public void donnerRecompence(Player player) {
+    public void giveReward(Player player) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
@@ -253,7 +247,13 @@ public class LootBoxListener implements Listener {
                     double percentage = (double) itemData.get("percent");
                     totalPercentages += percentage;
                     if (randomPercentage < totalPercentages) {
-                        ItemStack itemStack = new ItemStack(Material.valueOf((String) itemData.get("name")), (int) itemData.get("quantity"));
+                        String materialName = (String) itemData.get("name");
+                        if(Material.getMaterial(materialName) == null) {
+                            player.sendMessage("Nom de matériau invalide: " + materialName);
+                            // Gérer l'erreur
+                            throw new IllegalArgumentException("Nom de matériau invalide: " + materialName);
+                        }
+                        ItemStack itemStack = new ItemStack(Material.valueOf(materialName), (int) itemData.get("quantity"));
                         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
                         player.getInventory().addItem(itemStack);
                         int quantity = (int) itemData.get("quantity");
@@ -265,4 +265,3 @@ public class LootBoxListener implements Listener {
         }, 3000); // Délai de 3 secondes en millisecondes
     }
 }
-

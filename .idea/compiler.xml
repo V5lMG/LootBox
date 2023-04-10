@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="LootBox" target="1.8" />
+      <module name="LootBox" target="16" />
       <module name="LootBox (2)" target="1.5" />
     </bytecodeTargetLevel>
   </component>

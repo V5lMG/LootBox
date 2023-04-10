@@ -62,16 +62,16 @@ public class ConfigManager {
         // Créer un nouveau fichier de configuration avec des sections et des valeurs par défaut
         config = new YamlConfiguration();
         config.createSection("items");
-        config.set("items.1.name", "Iron Ingot");
+        config.set("items.1.name", "IRON_INGOT");
         config.set("items.1.quantity", 16);
         config.set("items.1.percent", 50.0);
-        config.set("items.2.name", "Gold Ingot");
+        config.set("items.2.name", "GOLD_INGOT");
         config.set("items.2.quantity", 8);
         config.set("items.2.percent", 25.0);
-        config.set("items.3.name", "Diamond");
+        config.set("items.3.name", "DIAMOND");
         config.set("items.3.quantity", 4);
         config.set("items.3.percent", 12.5);
-        config.set("items.4.name", "Emerald");
+        config.set("items.4.name", "EMERALD");
         config.set("items.4.quantity", 2);
         config.set("items.4.percent", 6.25);
         // Enregistrer les données de configuration dans le fichier YAML

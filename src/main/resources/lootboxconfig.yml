@@ -9,7 +9,7 @@ items:
     name: DIAMOND
     quantity: 10
     percent: 10.0
-  
+
   2:
     name: DIRT
     quantity: 64

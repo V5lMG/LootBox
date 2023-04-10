@@ -15,21 +15,21 @@ public class LootBoxCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // Vérifie si la commande est exécutée par un joueur
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Cette commande doit être exécutée par un joueur.");
             return true;
         }
 
-        // Récupère le joueur qui a exécuté la commande
-        Player player = (Player) sender;
-
         // Créer l'objet coffre
         ItemStack lootbox = new ItemStack(Material.CHEST);
         ItemMeta meta = lootbox.getItemMeta();
-        assert meta != null;
 
-        meta.setDisplayName(ChatColor.BLUE + "Lootbox");
-        lootbox.setItemMeta(meta);
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.BLUE + "Lootbox");
+            lootbox.setItemMeta(meta);
+        } else {
+            player.sendMessage(ChatColor.RED + "Une erreur est survenue lors de la création de l'objet Lootbox.");
+        }
 
         // Ajouter l'objet à l'inventaire du joueur
         player.getInventory().addItem(lootbox);

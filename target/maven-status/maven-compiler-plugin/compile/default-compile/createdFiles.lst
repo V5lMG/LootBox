@@ -1,7 +1,5 @@
-fr\lootbox\ChestMetadataManager.class
 fr\lootbox\LootBoxListener.class
 fr\lootbox\LootBoxCommand.class
-fr\lootbox\ConfigurationSection.class
 fr\lootbox\LootBoxListener$1.class
 fr\lootbox\ConfigManager.class
 fr\lootbox\LootBox.class
