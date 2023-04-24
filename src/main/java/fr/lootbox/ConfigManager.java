@@ -77,4 +77,17 @@ public class ConfigManager {
         // Enregistrer les données de configuration dans le fichier YAML
         saveConfig();
     }
+
+    // Méthode pour récupérer la plus grande quantité définie dans le fichier de configuration
+    public static int getMaxQuantity() {
+        int maxQuantity = 0;
+        for (String key : Objects.requireNonNull(config.getConfigurationSection("items")).getKeys(false)) {
+            int quantity = config.getInt("items." + key + ".quantity");
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+            }
+        }
+        return maxQuantity/64;
+    }
+
 }

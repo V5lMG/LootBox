@@ -13,12 +13,16 @@ public final class LootBox extends JavaPlugin {
         // Enregistrer les commandes et les événements
         Objects.requireNonNull(getCommand("box")).setExecutor(new LootBoxCommand());
         getServer().getPluginManager().registerEvents(new LootBoxListener(this), this);
+        getServer().getPluginManager().registerEvents(new LootBoxSecurity(this), this);
+
+        getLogger().info("Plugin allumé");
 
     }
 
     @Override
     public void onDisable() {
-
+        getLogger().info("Plugin éteint");
     }
+
 
 }

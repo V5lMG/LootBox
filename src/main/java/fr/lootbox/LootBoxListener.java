@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -42,8 +43,11 @@ public class LootBoxListener implements Listener {
 
             if (chest.getCustomName() != null && chest.getCustomName().equals(ChatColor.BLUE + "Lootbox")) {
                 if (action == Action.LEFT_CLICK_BLOCK) {
+                    if (!checkInventorySpace(player)) {
+                        return;
+                    }
                     player.closeInventory();
-                    AfficherInterface(player);
+                    printInterface(player);
                     // Définition de l'action à effectuer après 3 secondes
                     Bukkit.getScheduler().runTaskLater(plugin, player::closeInventory, 60L);
                 }
@@ -71,7 +75,7 @@ public class LootBoxListener implements Listener {
         Inventory chestInventory = chest.getBlockInventory();
 
         // Création de l'inventaire temporaire
-        Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.BLUE + "Aperçu des items");
+        Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.BLUE + "Lootbox");
 
         // Récupération des items dans la config
         ConfigurationSection itemsSection = plugin.getConfig().getConfigurationSection("items");
@@ -133,11 +137,32 @@ public class LootBoxListener implements Listener {
 
     }
 
+    public boolean checkInventorySpace(Player player) {
+        Inventory inventory = player.getInventory();
+        int emptySlots = 0;
+        for (ItemStack item : inventory.getContents()) {
+            if (item == null) {
+                emptySlots++;
+            }
+        }
+        if (emptySlots < ConfigManager.getMaxQuantity()) {
+            player.sendMessage(ChatColor.RED + "Votre inventaire est plein. Faites de la place avant de continuer.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     // Action à effectuer sur un clique gauche
-    private void AfficherInterface(Player player) {
+    private void printInterface(Player player) {
         getItemConfig();
         createInterfaceAnimation(player);
-        giveReward(player);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                giveReward(player);
+            }
+        }.runTaskLater(plugin, 60L);
     }
 
     public void getItemConfig() {
@@ -214,7 +239,6 @@ public class LootBoxListener implements Listener {
         }
 
 
-
         // Affichage de l'inventaire temporaire pour le joueur
         player.openInventory(inventory);
 
@@ -229,39 +253,36 @@ public class LootBoxListener implements Listener {
     }
 
     public void giveReward(Player player) {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                // Choisir un item au hasard dans la config en tenant compte des probabilités
-                // Envoyer dans le chat un message de récompense.
-                int totalPercentages = 0;
-                for (int i = 1; i <= MAX_INTERFACE_SLOTS && itemsConfig.containsKey(i); i++) {
-                    Map<String, Object> itemData = itemsConfig.get(i);
-                    double percentage = (double) itemData.get("percent");
-                    totalPercentages += percentage;
-                }
-                double randomPercentage = Math.random() * totalPercentages;
-                totalPercentages = 0;
-                for (int i = 1; i <= MAX_INTERFACE_SLOTS && itemsConfig.containsKey(i); i++) {
-                    Map<String, Object> itemData = itemsConfig.get(i);
-                    double percentage = (double) itemData.get("percent");
-                    totalPercentages += percentage;
-                    if (randomPercentage < totalPercentages) {
-                        String materialName = (String) itemData.get("name");
-                        if(Material.getMaterial(materialName) == null) {
-                            player.sendMessage("Nom de matériau invalide: " + materialName);
-                            // Gérer l'erreur
-                            throw new IllegalArgumentException("Nom de matériau invalide: " + materialName);
-                        }
-                        ItemStack itemStack = new ItemStack(Material.valueOf(materialName), (int) itemData.get("quantity"));
-                        player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-                        player.getInventory().addItem(itemStack);
-                        int quantity = (int) itemData.get("quantity");
-                        player.sendMessage(ChatColor.GREEN + "Vous avez reçu " + quantity + " " + itemStack.getType().name());
-                        break;
-                    }
-                }
-            }
-        }, 3000); // Délai de 3 secondes en millisecondes
+         // Choisir un item au hasard dans la config en tenant compte des probabilités
+         // Envoyer dans le chat un message de récompense.
+         int totalPercentages = 0;
+         for (int i = 1; i <= MAX_INTERFACE_SLOTS && itemsConfig.containsKey(i); i++) {
+             Map<String, Object> itemData = itemsConfig.get(i);
+             double percentage = (double) itemData.get("percent");
+             totalPercentages += percentage;
+         }
+         double randomPercentage = Math.random() * totalPercentages;
+         totalPercentages = 0;
+         for (int i = 1; i <= MAX_INTERFACE_SLOTS && itemsConfig.containsKey(i); i++) {
+             Map<String, Object> itemData = itemsConfig.get(i);
+             double percentage = (double) itemData.get("percent");
+             totalPercentages += percentage;
+             if (randomPercentage < totalPercentages) {
+                 String materialName = (String) itemData.get("name");
+                 if(Material.getMaterial(materialName) == null) {
+                     player.sendMessage("Nom de matériau invalide: " + materialName);
+                     // Gérer l'erreur
+                     throw new IllegalArgumentException("Nom de matériau invalide: " + materialName);
+                 }
+                 ItemStack itemStack = new ItemStack(Material.valueOf(materialName), (int) itemData.get("quantity"));
+                 player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+                 player.getInventory().addItem(itemStack);
+                 int quantity = (int) itemData.get("quantity");
+                 player.sendMessage(ChatColor.GREEN + "Vous avez reçu " + quantity + " " + itemStack.getType().name());
+                 break;
+             }
+         }
     }
+
 }
+
