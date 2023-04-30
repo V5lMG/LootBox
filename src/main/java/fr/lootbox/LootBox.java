@@ -16,13 +16,36 @@ public final class LootBox extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LootBoxListener(this), this);
         getServer().getPluginManager().registerEvents(new LootBoxSecurity(this), this);
 
-        getLogger().info("Plugin allumé");
+        getLogger().info("""
+
+
+                 _                    _   ______                                 \s
+                | |                  | |  | ___ \\                                \s
+                | |      ___    ___  | |_ | |_/ /  ___  __  __        ___   _ __ \s
+                | |     / _ \\  / _ \\ | __|| ___ \\ / _ \\ \\ \\/ /       / _ \\ | '_ \\\s
+                | |____| (_) || (_) || |_ | |_/ /| (_) | >  <       | (_) || | | |
+                \\_____/ \\___/  \\___/  \\__|\\____/  \\___/ /_/\\_\\       \\___/ |_| |_|
+                                                                                 \s
+                                                                                 \s
+                """);
 
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Plugin éteint");
+        getLogger().info("""
+
+
+                 _                    _   ______                          __   __\s
+                | |                  | |  | ___ \\                        / _| / _|
+                | |      ___    ___  | |_ | |_/ /  ___  __  __     ___  | |_ | |_\s
+                | |     / _ \\  / _ \\ | __|| ___ \\ / _ \\ \\ \\/ /    / _ \\ |  _||  _|
+                | |____| (_) || (_) || |_ | |_/ /| (_) | >  <    | (_) || |  | | \s
+                \\_____/ \\___/  \\___/  \\__|\\____/  \\___/ /_/\\_\\    \\___/ |_|  |_| \s
+                                                                                 \s
+                                                                                 \s
+                """);
+
     }
 
 
