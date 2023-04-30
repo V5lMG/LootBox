@@ -7,9 +7,3 @@ description: Un simple plugin de lootbox
 commands:
   box:
     description: Commande destinée aux modérateurs pour donner la lootbox et la poser
-
-lootbox-location:
-  1:
-    x:
-    y:
-    z:

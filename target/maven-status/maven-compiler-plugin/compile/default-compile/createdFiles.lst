@@ -3,3 +3,4 @@ fr\lootbox\LootBoxCommand.class
 fr\lootbox\LootBoxListener$1.class
 fr\lootbox\ConfigManager.class
 fr\lootbox\LootBox.class
+fr\lootbox\LootBoxSecurity.class

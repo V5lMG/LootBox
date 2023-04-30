@@ -8,7 +8,8 @@ public final class LootBox extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ConfigManager.loadConfig();
+
+        ConfigManager.loadConfig(this);
 
         // Enregistrer les commandes et les événements
         Objects.requireNonNull(getCommand("box")).setExecutor(new LootBoxCommand());
