@@ -38,7 +38,4 @@ public class LootBoxSecurity implements Listener {
             event.setCancelled(true);
         }
     }
-
-
-
 }
